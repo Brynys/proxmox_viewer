@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxmox VM Viewer</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'vm_viewer/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Proxmox VMs</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vm in vms %}
+                <tr>
+                    <td>{{ vm.vmid }}</td>
+                    <td>{{ vm.name }}</td>
+                    <td>{{ vm.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
