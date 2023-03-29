@@ -1,34 +1,84 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proxmox VM Viewer</title>
-    {% load static %}
+    <title>Proxmox VMs and Containers</title>
     <link rel="stylesheet" href="{% static 'vm_viewer/styles.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqFjcJ6pajs/rz7+omigIVoePTDw2y2D0fD0r6G3JqE7X" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
-        <h1>Proxmox VMs</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for vm in vms %}
-                <tr>
-                    <td>{{ vm.vmid }}</td>
-                    <td>{{ vm.name }}</td>
-                    <td>{{ vm.status }}</td>
-                </tr>
+    <h1>Proxmox VMs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Node</th> 
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vm in vms %}
+            <tr>
+                <td>{{ vm.vmid }}</td>
+                <td>{{ vm.name }}</td>
+                <td>{{ vm.status }}</td>
+                <td>{{ vm.node }}</td>
+                <td>
+                    {% if vm.status == 'running' %}
+                        <form action="{% url 'toggle_vm' vm.vmid 'stop' vm.node %}" method="POST" >
+                            {% csrf_token %}
+                            <input type="submit" value="Stop" class="btn btn-danger">
+                        </form>
+                    {% else %}
+                        <form action="{% url 'toggle_vm' vm.vmid 'start' vm.node %}" method="POST" >
+                            {% csrf_token %}
+                            <input type="submit" value="Start" class="btn btn-success">
+                        </form>
+                    {% endif %}
+                </td>
                 {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+
+    <h1>Proxmox Containers</h1>  
+    <table>  
+        <thead>  
+            <tr>  
+                <th>ID</th>  
+                <th>Name</th>  
+                <th>Status</th>
+                <th>Node</th>
+                <th>Action</th>  
+            </tr>  
+        </thead>  
+        <tbody>  
+            {% for container in containers %}  
+            <tr>  
+                <td>{{ container.vmid }}</td>  
+                <td>{{ container.name }}</td>  
+                <td>{{ container.status }}</td> 
+                <td>{{ container.node }}</td> 
+                <td>
+                    {% if container.status == 'running' %}
+                        <form action="{% url 'toggle_vm' container.vmid 'stop' container.node %}" method="POST" >
+                            {% csrf_token %}
+                            <input type="submit" value="Stop" class="btn btn-danger">
+                        </form>
+                    {% else %}
+                        <form action="{% url 'toggle_vm' container.vmid 'start' container.node %}" method="POST" >
+                            {% csrf_token %}
+                            <input type="submit" value="Start" class="btn btn-success">
+                        </form>
+                    {% endif %}
+                </td>
+                {% endfor %}
+        </tbody>
+    </table>
+    
 </body>
 </html>
+
