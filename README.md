@@ -1,0 +1,2 @@
+# Proxmox Management Panel for Teachers and Students
+The Proxmox Management Panel is a user-friendly web-based interface designed to provide easy access to virtual machines (VMs) hosted on Proxmox in a data center environment for both teachers and students. The main goal of this project is to simplify the process of creating, managing, and accessing VMs, enabling a more efficient and streamlined educational experience for IT courses.
