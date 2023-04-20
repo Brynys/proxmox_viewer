@@ -2,35 +2,60 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f8f9fa;
+    color: #212529;
+    line-height: 1.6;
 }
 
 .container {
     width: 80%;
     margin: auto;
     padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 h1 {
     text-align: center;
     margin-bottom: 30px;
+    color: #0080ff;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 400px;
 }
 
 th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #dee2e6;
     text-align: left;
-    padding: 8px;
+    padding: 12px;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #e9ecef;
+    color: #212529;
     font-weight: bold;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
+    .container {
+        width: 95%;
+    }
+    table {
+        min-width: 0;
+    }
 }
