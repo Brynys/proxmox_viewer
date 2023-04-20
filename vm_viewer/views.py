@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect
 from proxmoxer import ProxmoxAPI
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 api_url = '192.168.5.51:8006'
 api_user = 'Api-jj@pve'
 api_password = '123456'
 
+
+
 def get_vms(request):
     proxmox = ProxmoxAPI(api_url, user=api_user, password=api_password, verify_ssl=False)
-    
-
     vms = []
     for node in proxmox.nodes.get():
         for vm in proxmox.nodes(node['node']).qemu.get():
@@ -28,7 +32,39 @@ def get_vms(request):
     nodes = proxmox.nodes.get()
 
     context = {'nodes': nodes, 'vms': vms, 'containers': containers}
+    return JsonResponse(context, safe=False)
     return render(request, 'vm_viewer/table.html', context)
+    
+def get_vms_JSON(request):
+    proxmox = ProxmoxAPI(api_url, user=api_user, password=api_password, verify_ssl=False)
+
+    nodes = proxmox.nodes.get()
+    node_strings = [node['node'] for node in nodes]
+    plain_nodes = "\n".join(node_strings)
+
+    vms = []
+    for node in nodes:
+        for vm in proxmox.nodes(node['node']).qemu.get():
+            vm['node'] = node['node']
+            vms.append(vm)
+
+    vm_strings = [f"{vm['node']},{vm['vmid']},{vm['name']},{vm['status']}" for vm in vms]
+    plain_vms = "\n".join(vm_strings)
+
+    containers = []
+    for node in nodes:
+        for container in proxmox.nodes(node['node']).lxc.get():
+            container['node'] = node['node']
+            containers.append(container)
+
+    container_strings = [f"{container['node']},{container['vmid']},{container['name']},{container['status']}" for container in containers]
+    plain_containers = "\n".join(container_strings)
+
+    plain_text = f"nodes:\n{plain_nodes}\nvms:\n{plain_vms}\ncontainers:\n{plain_containers}"
+    
+    return HttpResponse(plain_text, content_type='text/plain')
+
+    
 
 def toggle_vm(api, vmid, action, node):
     if action == 'start':

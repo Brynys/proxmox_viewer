@@ -1,4 +1,4 @@
-Node1 = {Name:"Node1",IP:"192.168.5.51",Disk:100,RAM:64,id:1,status:true};
+/*Node1 = {Name:"Node1",IP:"192.168.5.51",Disk:100,RAM:64,id:1,status:true};
 Node2 = {Name:"Node2",IP:"192.168.5.52",Disk:200,RAM:32,id:2,status:true};
 Node3 = {Name:"SuperNode",IP:"192.168.5.53",Disk:2000,RAM:256,id:3,status:true};
 const NodesList = [Node1,Node2,Node3];
@@ -7,14 +7,58 @@ Server1 = {SName:"Server1",IP:"10.10.0.5",Disk:10,RAM:1,Node:1,status:true};
 Server2 = {SName:"Server2",IP:"10.10.0.6",Disk:20,RAM:10,Node:2,status:true};
 Server3 = {SName:"Server3",IP:"10.10.0.7",Disk:30,RAM:5,Node:2,status:false};
 Server4 = {SName:"SuperServer",IP:"10.10.0.100",Disk:1000,RAM:128,Node:3,status:true};
-const ServersList = [Server1,Server2,Server3,Server4];
+const ServersList = [Server1,Server2,Server3,Server4];*/
+
+function renameObjects(jsonData) {
+    const renamedData = JSON.parse(JSON.stringify(jsonData));
+    
+    const renameArrayObjects = (array) => {
+      return array.map(item => {
+        if (item.name) {
+          const newItem = {};
+          newItem[item.name] = item;
+          return newItem;
+        }
+        return item;
+      });
+    };
+  
+    if (renamedData.nodes) {
+      renamedData.nodes = renameArrayObjects(renamedData.nodes);
+    }
+  
+    if (renamedData.vms) {
+      renamedData.vms = renameArrayObjects(renamedData.vms);
+    }
+  
+    if (renamedData.containers) {
+      renamedData.containers = renameArrayObjects(renamedData.containers);
+    }
+  
+    return renamedData;
+  }
+  
+
+async function fetchVMsAndContainers() {
+    const response = await fetch('/get_vms_JSON/');
+    const data = await response.json();
+    renamedData = renameObjects(data);
+    
+    console.log(renamedData);
+}
+  
+fetchVMsAndContainers();
+  
+
+
+
 
 function showNode(){
     const Nodes123 = document.getElementById("Nodes");
     NodesList.forEach(Node => {
-        const NodeElement = document.getElementById(Node.Name);
+        const NodeElement = document.getElementById(node.no);
         if(NodeElement == null){
-            if(Node.status){
+            if(node.status){
                 statuscolor = "green";
                 statusanimation = "inline-flex";
             }else{statuscolor = "red";
