@@ -17,7 +17,7 @@ containers = [];
   
 
 async function fetchVMsAndContainers() {
-    const response = await fetch('/get_vms_JSON/');
+    const response = await fetch('/get_vms/');
     const data = await response.json();
 
     nodes = data.nodes;
@@ -29,7 +29,7 @@ async function fetchVMsAndContainers() {
 }
 
 async function reloadJsonData(vmnode) {
-    const response = await fetch('/get_vms_JSON/');
+    const response = await fetch('/get_vms/');
     const data = await response.json();
 
     nodes = data.nodes;
@@ -286,7 +286,7 @@ function toggleVM(vmid, action, node) {
 
         setTimeout(() => {
             reloadJsonData(vm.node);
-        }, 1500);
+        }, 2000);
 
     }else{
     fetch(`/toggle_vm/${vm.vmid}/${action}/${node}/`, {

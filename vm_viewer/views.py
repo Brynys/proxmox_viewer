@@ -33,38 +33,8 @@ def get_vms(request):
 
     context = {'nodes': nodes, 'vms': vms, 'containers': containers}
     return JsonResponse(context, safe=False)
-    return render(request, 'vm_viewer/table.html', context)
-    
-def get_vms_JSON(request):
-    proxmox = ProxmoxAPI(api_url, user=api_user, password=api_password, verify_ssl=False)
-
-    nodes = proxmox.nodes.get()
-    node_strings = [node['node'] for node in nodes]
-    plain_nodes = "\n".join(node_strings)
-
-    vms = []
-    for node in nodes:
-        for vm in proxmox.nodes(node['node']).qemu.get():
-            vm['node'] = node['node']
-            vms.append(vm)
-
-    vm_strings = [f"{vm['node']},{vm['vmid']},{vm['name']},{vm['status']}" for vm in vms]
-    plain_vms = "\n".join(vm_strings)
-
-    containers = []
-    for node in nodes:
-        for container in proxmox.nodes(node['node']).lxc.get():
-            container['node'] = node['node']
-            containers.append(container)
-
-    container_strings = [f"{container['node']},{container['vmid']},{container['name']},{container['status']}" for container in containers]
-    plain_containers = "\n".join(container_strings)
-
-    plain_text = f"nodes:\n{plain_nodes}\nvms:\n{plain_vms}\ncontainers:\n{plain_containers}"
-    
-    return HttpResponse(plain_text, content_type='text/plain')
-
-    
+    render(request, 'vm_viewer/table.html', context)
+        
 
 def toggle_vm(api, vmid, action, node):
     if action == 'start':
