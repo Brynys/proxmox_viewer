@@ -71,6 +71,8 @@ def toggle_vm(api, vmid, action, node):
         api.nodes(node).qemu(vmid).status.start.post()
     elif action == 'stop':
         api.nodes(node).qemu(vmid).status.stop.post()
+    elif action == 'reboot':
+        api.nodes(node).qemu(vmid).status.reboot.post()
 
 def toggle_vm_view(request, vmid, action, node):
     if request.method == "POST":
