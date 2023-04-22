@@ -73,9 +73,13 @@ def toggle_vm(api, vmid, action, node):
         api.nodes(node).qemu(vmid).status.stop.post()
 
 def toggle_vm_view(request, vmid, action, node):
-    api = ProxmoxAPI(api_url, user=api_user, password=api_password, verify_ssl=False)
-    toggle_vm(api, vmid, action, node)
-    return redirect('get_vms')
+    if request.method == "POST":
+        api = ProxmoxAPI(api_url, user=api_user, password=api_password, verify_ssl=False)
+        toggle_vm(api, vmid, action, node)
+        success = True
+        return JsonResponse({'success': success})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 def get_containers(api):
     containers = []
