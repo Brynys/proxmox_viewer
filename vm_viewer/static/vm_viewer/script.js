@@ -69,7 +69,7 @@ function showNode(){
                         <h3 class="mb-3 text-lg font-semibold text-indigo-300 md:text-xl">
                             `+node.node+`
                         </h3>
-                        <button type="button" id="`+node.node+`open-popup" class="float-right text-gray-900 bg-gray-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal">
+                        <button type="button" id="`+node.node+`open-popup" class="float-right text-gray-900 bg-gray-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800  dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-green-400" viewBox="0 0 448 512"><path d="M240 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H176V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H384c17.7 0 32-14.3 32-32s-14.3-32-32-32H240V80z"/></svg>
                             </button>
                         
@@ -88,83 +88,86 @@ function showNode(){
 
             const popup = document.createElement("div");
             body = document.getElementById('body');
-            popup.id = node.node+"popup";
-            popup.className ="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50 hidden";
+            popup.id = node.node + "popup";
+            popup.className = "fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50 hidden";
+            
             popup.innerHTML = `
-            
-                        <!-- Add the popup content -->
-                        <div class="relative w-full h-full max-w-md md:h-auto">
-                            <!-- Modal content -->
-                            <div class="relative bg-grey-700 rounded-lg shadow dark:bg-gray-700">
-                                <button type="button" id="`+node.node+`close-popup" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="authentication-modal">
-                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                    <span class="sr-only">Close modal</span>
-                                </button>
-                                <div class="px-6 py-6 lg:px-8">
-                                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Create Server on Node `+node.node+`</h3>
-                                    <form class="space-y-5" action="#" id="create-vm-form">
-                                            <div>
-                                            <label for="Server-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Server Name</label>
-                                            <input type="text" name="Server-name" id="Server-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Server70" required>
-                                            </div>
-                                           <div class="flex">
-                                           <div>
-                                            <label for="Server-disk" class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">Server Disk (MB)</label>
-                                            <input type="number" min="0" name="Server-disk" id="Server-disk" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40% p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="40000" required>
-                                           </div>
-                                           <div class="ml-6">
-                                            <label for="Server-ram" class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">Server RAM (MB)</label>
-                                            <input type="number" name="Server-ram" id="Server-ram" min="0" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40% p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="16000" required>
-                                           </div>
-                                           </div>
-                                            <div>
-                                            <label for="Server-image" class="mb-2 block  text-sm font-medium text-gray-900 dark:text-white">Server Image</label>
-                                            <input type="text" name="Server-image" id="Server-image" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Ubuntu" required>
-                                            </div>
-                                            <div>
-                                            <label for="HowMany" class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white">How Many Servers?</label>
-                                            <input type="number" name="HowMany" id="HowMany" min="1" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40% p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="3" required>
-                                            </div>
-                                        <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Server</button>
-                                    </form>
-                                </div>
+            <div class="relative w-full max-w-md max-h-full md:max-w-3xl md:max-h-auto">
+                <div class="bg-gray-700 rounded-lg shadow dark:bg-gray-700">
+                    <div class="relative p-6">
+                        <div class="max-h-[calc(100vh-6rem)] overflow-y-auto">
+                        <button type="button" id="` + node.node + `close-popup" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <h3 class="mb-6 text-xl font-medium text-gray-900 ">Create Server on Node ` + node.node + `</h3>
+                        <form class="space-y-5" action="#" id="create-vm-form`+node.node+`" >
+                            <div>
+                                <label for="Server-name" class="block mb-2 text-sm font-medium text-gray-900 ">Server Name</label>
+                                <input type="text" name="Server-name" id="Server-name" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 " placeholder="Server70" required>
                             </div>
+                            <div>
+                                <label for="Node" class="block mb-2 text-sm font-medium text-gray-900 ">Node</label>
+                                <select name="Node" id="Node" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 " required>
+                                    <option value="pve1">pve1</option>
+                                    <option value="pve2">pve2</option>
+                                    <option value="pve3">pve3</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="Storage-location" class="block mb-2 text-sm font-medium text-gray-900 ">Storage Location</label>
+                                <select name="Storage-location" id="Storage-location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 " required>
+                                    <option value="nfs-pool">nfs-pool</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="ISO-image" class="block mb-2 text-sm font-medium text-gray-700 ">ISO Image</label>
+                                <select name="ISO-image" id="ISO-image" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 " required>
+                                    <option value="debian-11.6.0-amd64-netinst.iso">Debian 11.6.0 (amd64-netinst)</option>
+                                    <option value="ubuntu-22.04.2-live-server.iso">Ubuntu 22.04.2 (live-server)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="Disk-size" class="block mb-2 text-sm font-medium text-gray-900 ">Disk Size (GB)</label>
+                                <input type="number" min="10" max="50" name="Disk-size" id="Disk-size" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 " placeholder="10" required>
+                            </div>
+                            <div>
+                                <label for="Disk-location" class="block mb-2 text-sm font-medium text-gray-900 ">Disk Location</label>
+                                <select name="Disk-location" id="Disk-location" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 " required>
+                                    <option value="nfs-pool">nfs-pool</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="CPU-cores" class="block mb-2 text-sm font-medium text-gray-900 ">CPU Cores</label>
+                                <input type="number" min="1" max="6" name="CPU-cores" id="CPU-cores" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 " placeholder="1" required>
+                            </div>
+                            <div>
+                                <label for="Memory-size" class="block mb-2 text-sm font-medium text-gray-900 ">Memory Size (MB)</label>
+                                <input type="number" min="1000" max="64000" name="Memory-size" id="Memory-size" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 " placeholder="1" required>
+                            </div>
+                            <div>
+                                <label for="Network-Bridge" class="block mb-2 text-sm font-medium text-gray-900 ">Network Bridge</label>
+                                <select name="Network-Bridge" id="Network-Bridge" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 " required>
+                                    <option value="nmbr0">nmbr1</option>
+                                    <option value="nmbr1">nmbr2</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="HowMany" class="block mb-2 text-sm font-medium text-gray-900 ">How Many Servers?</label>
+                                <input type="number" name="HowMany" id="HowMany" min="1" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40% p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-500 " placeholder="3" required>
+                            </div>
+                            <button type="submit" id="submitButton`+node.node+`"  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Server</button>
+                            </form>
                         </div>
+                    </div>
+                </div>
+            </div>
             `;
-            body.appendChild(popup);
-            //Uzpůsobení pro vytvoření 
-            document.getElementById("create-vm-form").addEventListener("submit", async (event) => {
-                event.preventDefault();
-              
-                const vmCount = parseInt(document.getElementById("vm_count").value);
-                
-                // Collect other VM settings from the form as necessary
-              
-                try {
-                  const response = await fetch("/create_vms/", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                      "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-                    },
-                    body: JSON.stringify({
-                      vm_count: vmCount,
-                      // Include other VM settings as necessary
-                    }),
-                  });
-              
-                  if (response.ok) {
-                    alert("VMs created successfully!");
-                  } else {
-                    alert("Error creating VMs. Please try again.");
-                  }
-                } catch (error) {
-                  console.error(error);
-                  alert("Error creating VMs. Please try again.");
-                }
-              });
-              
             
+            body.appendChild(popup);
+
             const openPopupButton = document.getElementById(node.node+"open-popup");
             const closePopupButton = document.getElementById(node.node+"close-popup");
             
@@ -176,6 +179,47 @@ function showNode(){
             closePopupButton.addEventListener("click", () => {
                 popup.classList.add("hidden");
             });
+            
+            
+            // Add the event listener for form submission
+            
+            $(document).ready(function() {
+                $(`"#create-vm-form"${node.node}`).submit(async function(event) {
+                    event.preventDefault(); // Prevent the form from submitting by default
+                    console.log('Form submitted'); // Log the form submission event in the console
+            
+                    const formData = new FormData(event.target); // Collect form data
+                    const data = Object.fromEntries(formData.entries()); // Convert form data to an object
+                    const queryParams = new URLSearchParams(data).toString();
+                    const url = `/create_vm/?${queryParams}`;
+                    const csrftoken = $('input[name=csrfmiddlewaretoken]').val(); // Get CSRF token from the form
+            
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRFToken': csrftoken
+                        }
+                      })
+                        .then(response => {
+                          if (response.ok) {
+                            console.log('VM creation request sent successfully');
+                          } else {
+                            console.error('Error sending VM creation request');
+                          }
+                        })
+                        .catch(error => {
+                          console.error('Error sending VM creation request:', error);
+                        });
+
+
+
+                });
+            });
+            
+        
+            
+            
         }
     });
 }
@@ -193,17 +237,21 @@ function delateServers() {
 function showServer(Name) {
     const ServersElement = document.getElementById("Servers");
     const ServersHeder = document.getElementById("ServersHeder");
-    ServersHeder.innerHTML = Name + " Servers"
+    ServersHeder.innerHTML = Name + " VMs"
     vms.forEach(vm => {
         if(vm.node==Name){
             
             const ServerElement = document.getElementById(vm.name);
             if(ServerElement==null){
-                if(vm.status==="running"){
+                if(vm.status=="running"){
                     statuscolor = "green";
-                statusanimation = "inline-flex";
-            }else{statuscolor = "red";
-                statusanimation = "hidden";}
+                    statusanimation = "inline-flex";}
+                if(vm.status=="stopped"){
+                    statuscolor = "red";
+                    statusanimation = "hidden";}
+                if(vm.status=="rebooting"){
+                    statuscolor = "yellow";
+                    statusanimation = "inline-flex";}
                 const ServerElement = document.createElement("div");
                 ServerElement.innerHTML = `
                 <span
@@ -220,11 +268,12 @@ function showServer(Name) {
 
                 `+ CheckStatus(vm)+`
 
-                <button type="button" onclick="toggleVM(${vm.vmid}, 'reboot', '${vm.node}')" class="float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                <button type="button" onclick="toggleVM(${vm.vmid}, 'reboot', '${vm.node}')" class="float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800  dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-slate-300" viewBox="0 0 512 512"><path d="M89.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L370.3 160H320c-17.7 0-32 14.3-32 32s14.3 32 32 32H447.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L398.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C57.2 122 39.6 150.7 28.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM23 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L109.6 352H160c17.7 0 32-14.3 32-32s-14.3-32-32-32H32.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"/></svg>
                 </button>
 
                 <p class="text-gray-300">
+                    VMID: `+vm.vmid+`<br />
                     Disk: `+(Math.floor(vm.maxdisk/(10737418.24)))/100+`GB<br />
                     RAM: `+(Math.floor(vm.mem/(10737418.24)))/100+`GB<br />
                 </p>
@@ -250,20 +299,26 @@ function showServer(Name) {
   
 function CheckStatus(vm) {
     if(vm.name === "openvpn"){
-        return `<button type="button" disabled class="cursor-not-allowed float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+        return `<button type="button" disabled class="cursor-not-allowed float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800  dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-red-400" viewBox="0 0 320 512"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/></svg>
     </button>`;
-    }else{
+    }
     if (vm.status === "running") {
-        return `<button type="button" onclick="toggleVM(${vm.vmid}, 'stop', '${vm.node}')" class="float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+        return `<button type="button" onclick="toggleVM(${vm.vmid}, 'stop', '${vm.node}')" class="float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800  dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-red-400" viewBox="0 0 320 512"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/></svg>
     </button>`;
-    } else {
-        return `<button type="button" onclick="toggleVM(${vm.vmid}, 'start', '${vm.node}')" class="float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+    } 
+    if (vm.status === "stopped") {
+        return `<button type="button" onclick="toggleVM(${vm.vmid}, 'start', '${vm.node}')" class="float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800  dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-green-400" viewBox="0 0 384 512"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
     </button>`;
     }
-}}
+    if (vm.status === "rebooting") {
+        return `<button type="button" disabled class="cursor-not-allowed float-right text-gray-900 bg-grey-200 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2 dark:bg-gray-800  dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-yellow-400 animate-spin" viewBox="0 0 512 512"><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-110.28 0-200-89.72-200-200S145.72 56 256 56s200 89.72 200 200-89.72 200-200 200z"/></svg>
+    </button>`;
+    }
+}
 
 function toggleVM(vmid, action, node) {
     
@@ -271,10 +326,13 @@ function toggleVM(vmid, action, node) {
         if (vm.vmid === vmid) {
     // Get the CSRF token
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
+ 
     // Make an AJAX request to the toggle_vm view
     if(action === "reboot"){
-        fetch(`/toggle_vm/${vm.vmid}/stop/${node}/`, {
+        delateServers();
+        vm.status = "rebooting";
+        showServer(node);
+        fetch(`/toggle_vm/${vm.vmid}/reboot/${node}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -284,41 +342,21 @@ function toggleVM(vmid, action, node) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                
+
             } else {
                 // Handle an unsuccessful response, e.g., show an error message
             }
+         
         })
         .catch(error => {
             console.error('Error:', error);
         });
 
         setTimeout(() => {
+            delateServers();
             reloadJsonData(vm.node);
-        }, 1000);
-
-        fetch(`/toggle_vm/${vm.vmid}/start/${node}/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                
-            } else {
-                // Handle an unsuccessful response, e.g., show an error message
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-        setTimeout(() => {
-            reloadJsonData(vm.node);
-        }, 2000);
+            showServer(node);
+        }, 4000);  
 
     }else{
     fetch(`/toggle_vm/${vm.vmid}/${action}/${node}/`, {
@@ -339,6 +377,7 @@ function toggleVM(vmid, action, node) {
     .catch(error => {
         console.error('Error:', error);
     });
+
     setTimeout(() => {
         reloadJsonData(vm.node);
     }, 1000);
